@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: '##AM - Builds on following description by adding an EC2 role & CWL / CW agent to instance. Latest AMI (as of 2.7.2016) is referenced for only Oregon region## AWS CloudFormation Sample Template LAMP_Single_Instance: Create a LAMP
+Description: '##AM - USE ONLY IN US-WEST-2 - Builds on following description by adding an EC2 role & CWL / CW agent to instance. Latest AMI (as of 2.7.2016) is referenced for only Oregon region## AWS CloudFormation Sample Template LAMP_Single_Instance: Create a LAMP
   stack using a single EC2 instance and a local MySQL database for storage. This template
   demonstrates using the AWS CloudFormation bootstrap scripts to install the packages
   and files necessary to deploy the Apache web server, PHP and MySQL at instance launch
@@ -477,6 +477,18 @@ Resources:
                 Fn::Join:
                 - ''
                 - - 'crontab /root/cron_cw.txt'
+            07_install_ec2_ssm_agent:
+              command:
+                Fn::Join:
+                - ''
+                - - 'curl https://amazon-ssm-'
+                  - Ref: AWS::Region
+                  - '.s3.amazonaws.com/latest/linux_amd64/amazon-ssm-agent.rpm -o /tmp/amazon-ssm-agent.rpm
+
+                    '
+                  - 'yum install -y /tmp/amazon-ssm-agent.rpm
+
+                    '
         Install:
           files:
             /etc/awslogs/awscli.conf:
@@ -862,7 +874,7 @@ Resources:
         ToPort: '22'
     Type: AWS::EC2::SecurityGroup
 
-  Ec2LoggingRole:
+  Ec2LoggingAndSsmRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -876,6 +888,8 @@ Resources:
             Action:
               - "sts:AssumeRole"
       Path: "/"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
       Policies:
         -
           PolicyName: "cw-and-cwl-agent"
@@ -904,4 +918,4 @@ Resources:
       Path: "/"
       Roles:
         -
-          Ref: "Ec2LoggingRole"
+          Ref: "Ec2LoggingAndSsmRole:"
