@@ -1114,3 +1114,9 @@ Resources:
         - Key: Name
           Value: WebServerInstanceDataVolume
       VolumeType: gp2
+  DataVolumeAttachment:
+    Type: AWS::EC2::VolumeAttachment
+    Properties:
+      Device: /dev/sdf
+      InstanceId: !Ref WebServerInstance
+      VolumeId: !Ref EbsDataVolume
