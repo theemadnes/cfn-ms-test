@@ -1,0 +1,21 @@
+{
+   "schemaVersion":"2.0",
+   "description":"Downloads, installs, and runs the CloudWatch Logs agent and the CloudWatch Custom Metrics collection script, as well as supporting libraries",
+   "parameters":{
+      "commands":{
+         "type":"StringList",
+         "description":"(Required) Specify a shell script or a command to run.",
+         "minItems":1,
+         "displayType":"textarea"
+      }
+   },
+   "mainSteps":[
+      {
+         "action":"aws:runShellScript",
+         "name":"runShellScript",
+         "inputs":{
+            "commands":"{{ commands }}"
+         }
+      }
+   ]
+}
