@@ -614,7 +614,7 @@ Resources:
         - Key: LifecycleStage
           Value: !Ref LifecycleStage
         - Key: Name
-          Value: WebServerInstance
+          Value: !Join [ "-", [ !Ref "AWS::StackName", "WebServerInstance" ] ]
       NetworkInterfaces:
       - AssociatePublicIpAddress: 'true'
         DeleteOnTermination: 'true'

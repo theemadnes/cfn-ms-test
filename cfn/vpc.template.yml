@@ -21,6 +21,8 @@ Resources:
         Value: !Ref 'AWS::StackId'
       - Key: Network
         Value: Public
+      - Key: Name
+        Value: !Join [ "-", [ !Ref "AWS::StackName", "VPC" ] ]
   PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -32,6 +34,8 @@ Resources:
         Value: !Ref 'AWS::StackId'
       - Key: Network
         Value: Public
+      - Key: Name
+        Value: !Join [ "-", [ !Ref "AWS::StackName", "PublicSubnet1" ] ]
   PublicSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
@@ -43,6 +47,8 @@ Resources:
         Value: !Ref 'AWS::StackId'
       - Key: Network
         Value: Public
+      - Key: Name
+        Value: !Join [ "-", [ !Ref "AWS::StackName", "PublicSubnet2" ] ]
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
@@ -172,6 +178,8 @@ Resources:
         Value: !Ref 'AWS::StackId'
       - Key: Network
         Value: Private
+      - Key: Name
+        Value: !Join [ "-", [ !Ref "AWS::StackName", "PrivateSubnet1" ] ]
   PrivateSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
@@ -183,6 +191,8 @@ Resources:
         Value: !Ref 'AWS::StackId'
       - Key: Network
         Value: Private
+      - Key: Name
+        Value: !Join [ "-", [ !Ref "AWS::StackName", "PrivateSubnet2" ] ]
   PrivateRouteTable1:
     Type: AWS::EC2::RouteTable
     Properties:
